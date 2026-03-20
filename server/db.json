@@ -1,0 +1,115 @@
+{
+  "users": [
+    {
+      "id": "3eC8JqBUXln36WvYgB7qa",
+      "name": "Test User",
+      "email": "user@test.com",
+      "password": "$2b$10$tfxMxALVKhjXAMvGiTU7nOhrf36.2fbJp4MRFnDosnCVjqLWjosQe",
+      "phone": "1234567890",
+      "role": "user",
+      "verified": false,
+      "otp": "700692",
+      "otpExpires": 1774014165802,
+      "resetToken": null,
+      "resetTokenExpires": null,
+      "coins": 0,
+      "bankBalance": 1000,
+      "linkedBankAccount": "1111222233334444"
+    },
+    {
+      "id": "3f1bUyd-8t4LY279pQt9z",
+      "name": "NoOtp",
+      "email": "nootp@test.com",
+      "password": "$2b$10$dWZDvuEZx91LqUOQlrs8Nu5fkabBHJg94wpucBjDC9Rlfm5JtOWqa",
+      "phone": "1112223333",
+      "role": "user",
+      "verified": true,
+      "resetToken": null,
+      "resetTokenExpires": null,
+      "coins": 0,
+      "bankBalance": 1000,
+      "linkedBankAccount": "1111222233334444"
+    }
+  ],
+  "services": [
+    {
+      "id": "s1",
+      "category": "Barber",
+      "provider": "Clipper King",
+      "price": 30
+    },
+    {
+      "id": "s2",
+      "category": "Massage",
+      "provider": "Relax Therapies",
+      "price": 45
+    },
+    {
+      "id": "s3",
+      "category": "Pedicure",
+      "provider": "Nail Studio",
+      "price": 25
+    },
+    {
+      "id": "s4",
+      "category": "Manicure",
+      "provider": "Nail Studio",
+      "price": 28
+    },
+    {
+      "id": "s5",
+      "category": "Stylist",
+      "provider": "Fashion Pro",
+      "price": 50
+    },
+    {
+      "id": "s6",
+      "category": "Makeup",
+      "provider": "Glow Art",
+      "price": 60
+    },
+    {
+      "id": "s7",
+      "category": "Cook",
+      "provider": "Home Chef",
+      "price": 80
+    },
+    {
+      "id": "s8",
+      "category": "Plumber",
+      "provider": "FixIt Plumbers",
+      "price": 70
+    },
+    {
+      "id": "s9",
+      "category": "Electrician",
+      "provider": "Power Solutions",
+      "price": 65
+    },
+    {
+      "id": "s10",
+      "category": "Laundry",
+      "provider": "CleanWave",
+      "price": 35
+    },
+    {
+      "id": "s11",
+      "category": "Carpenter",
+      "provider": "WoodWorks",
+      "price": 90
+    },
+    {
+      "id": "s12",
+      "category": "Airport Pickup",
+      "provider": "Air Shuttle",
+      "price": 120
+    },
+    {
+      "id": "s13",
+      "category": "CCTV",
+      "provider": "Secure Vision",
+      "price": 90
+    }
+  ],
+  "bookings": []
+}

@@ -1,0 +1,175 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Segoe UI, Arial, sans-serif;
+    background: linear-gradient(180deg, #eaf2ff 0%, #fefefe 100%);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    align-items: flex-start;
+    padding-top: 14px;
+}
+
+.app {
+    width: min(100%, 980px);
+    padding: 8px;
+}
+
+header {
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.subtitle {
+    color: #2f4a9f;
+    margin: 0;
+    font-weight: 500;
+}
+
+.welcome-card {
+    background: linear-gradient(135deg, #1f6ef3 0%, #54b8ff 100%);
+    color: #fff;
+    border: none;
+}
+
+.welcome-grid {
+    display: grid;
+    grid-template-columns: 1.1fr .9fr;
+    gap: .7rem;
+}
+
+.welcome-grid h2 {
+    margin: 0 0 0.2rem;
+}
+
+.welcome-grid ul {
+    margin: .5rem 0;
+    padding-left: 1rem;
+}
+
+.feature-box {
+    background: rgba(255, 255, 255, .2);
+    border: 1px dashed rgba(255, 255, 255, .5);
+    border-radius: 8px;
+    padding: .7rem;
+}
+
+.card {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 10px;
+    box-shadow: 0 3px 14px rgba(0, 0, 0, .06);
+    padding: 14px;
+    margin-bottom: 12px;
+}
+
+input,
+select,
+button {
+    width: 100%;
+    margin: .35rem 0;
+    padding: .65rem .5rem;
+    border: 1px solid #bed1ee;
+    border-radius: 7px;
+    font-size: .95rem;
+}
+
+button {
+    cursor: pointer;
+    background: #2f6df1;
+    color: #fff;
+    border: 0;
+    font-weight: 700;
+}
+
+.danger {
+    background: #e53e3e;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.message {
+    padding: .5rem .8rem;
+    border-radius: 8px;
+    display: none;
+    margin-bottom: 10px;
+}
+
+.message.show {
+    display: block;
+}
+
+.message.success {
+    background: #e6ffed;
+    color: #064b2f;
+    border: 1px solid #95d5a1;
+}
+
+.message.error {
+    background: #ffe9e9;
+    color: #8b1a1a;
+    border: 1px solid #f3b4b4;
+}
+
+.tabs {
+    display: flex;
+    gap: .25rem;
+    margin-bottom: .5rem;
+}
+
+.tabs button {
+    flex: 1;
+    border: 1px solid #ccd3e9;
+    background: #f9fbff;
+    color: #111;
+    padding: .35rem;
+    border-radius: 5px;
+    font-weight: 600;
+}
+
+.tabs button.active {
+    background: #2f6df1;
+    color: #fff;
+}
+
+.dash-head {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.service-card {
+    border: 1px solid #dce4f5;
+    border-radius: 8px;
+    padding: .5rem;
+    margin-bottom: .4rem;
+    background: #fff;
+}
+
+.service-card small {
+    color: #555;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: .5rem;
+}
+
+.table th,
+.table td {
+    border: 1px solid #ddd;
+    padding: .4rem;
+    text-align: left;
+}
+
+.table th {
+    background: #f9faff;
+}
