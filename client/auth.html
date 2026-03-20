@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UtilApp - Login & Signup</title>
+    <link rel="stylesheet" href="auth.css" />
+</head>
+
+<body>
+    <div class="auth-container">
+        <div class="auth-wrapper">
+            <div class="form-container">
+                <div class="brand">
+                    <h1>UtilApp</h1>
+                    <p>Your Perfect Home Service Marketplace</p>
+                </div>
+
+                <div class="message" id="message"></div>
+
+                <div class="tabs-container">
+                    <button class="tab-btn active" id="login-tab">Login</button>
+                    <button class="tab-btn" id="signup-tab">Sign Up</button>
+                </div>
+
+                <!-- Login Form -->
+                <form id="login-form" class="auth-form active">
+                    <h2>Welcome Back</h2>
+                    <div class="form-group">
+                        <label for="login-email">Email Address</label>
+                        <input type="email" id="login-email" placeholder="Enter your email" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" placeholder="Enter your password" required />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                    <p class="forgot-link"><a href="#" id="forgot-trigger">Forgot Password?</a></p>
+                </form>
+
+                <!-- Signup Form -->
+                <form id="signup-form" class="auth-form">
+                    <h2>Create Account</h2>
+                    <div class="form-group">
+                        <label for="signup-name">Full Name</label>
+                        <input type="text" id="signup-name" placeholder="Enter your full name" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">Email Address</label>
+                        <input type="email" id="signup-email" placeholder="Enter your email" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-phone">Phone Number</label>
+                        <input type="tel" id="signup-phone" placeholder="Enter your phone number" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" placeholder="Create a password" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-role">I am a</label>
+                        <select id="signup-role" required>
+                            <option value="user">Customer</option>
+                            <option value="provider">Service Provider</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="bank-group" style="display: none;">
+                        <label for="signup-bank">Bank Account (Optional)</label>
+                        <input type="text" id="signup-bank" placeholder="For providers to receive payments" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create Account</button>
+                </form>
+
+                <!-- Forgot Password Form -->
+                <form id="forgot-form" class="auth-form">
+                    <h2>Reset Password</h2>
+                    <p class="instructions">Enter your email to receive a reset token</p>
+                    <div class="form-group">
+                        <label for="forgot-email">Email Address</label>
+                        <input type="email" id="forgot-email" placeholder="Enter your email" required />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Reset Token</button>
+                    <div id="reset-section" style="display: none; margin-top: 20px;">
+                        <div class="form-group">
+                            <label for="reset-token">Reset Token</label>
+                            <input type="text" id="reset-token" placeholder="Enter the token received" required />
+                        </div>
+                        <div class="form-group">
+                            <label for="reset-password">New Password</label>
+                            <input type="password" id="reset-password" placeholder="Enter new password" required />
+                        </div>
+                        <button type="button" id="confirm-reset" class="btn btn-primary">Confirm Reset</button>
+                    </div>
+                    <p class="back-link"><a href="#" id="back-to-login">Back to Login</a></p>
+                </form>
+            </div>
+
+            <div class="benefits">
+                <h2>Why Choose UtilApp?</h2>
+                <div class="benefit-item">
+                    <span class="icon">✓</span>
+                    <h3>Wide Range of Services</h3>
+                    <p>From plumbers to stylists, find all home services in one place</p>
+                </div>
+                <div class="benefit-item">
+                    <span class="icon">✓</span>
+                    <h3>Secure Payments</h3>
+                    <p>Pay with your card or earn UtilCoins for exclusive discounts</p>
+                </div>
+                <div class="benefit-item">
+                    <span class="icon">✓</span>
+                    <h3>Trusted Providers</h3>
+                    <p>All service providers are verified and highly rated</p>
+                </div>
+                <div class="benefit-item">
+                    <span class="icon">✓</span>
+                    <h3>Easy Booking</h3>
+                    <p>Book services in minutes with flexible scheduling</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="auth.js"></script>
+</body>
+
+</html>
