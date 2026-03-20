@@ -1,175 +1,117 @@
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Segoe UI, system-ui, Arial, sans-serif
 }
 
 body {
-    font-family: Segoe UI, Arial, sans-serif;
-    background: linear-gradient(180deg, #eaf2ff 0%, #fefefe 100%);
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    min-height: 100vh;
-    align-items: flex-start;
-    padding-top: 14px;
+    background: #f4f8ff;
+    color: #1f2937;
+    padding: 20px
 }
 
 .app {
-    width: min(100%, 980px);
-    padding: 8px;
-}
-
-header {
-    margin-bottom: 10px;
-    text-align: center;
-}
-
-.subtitle {
-    color: #2f4a9f;
-    margin: 0;
-    font-weight: 500;
-}
-
-.welcome-card {
-    background: linear-gradient(135deg, #1f6ef3 0%, #54b8ff 100%);
-    color: #fff;
-    border: none;
-}
-
-.welcome-grid {
-    display: grid;
-    grid-template-columns: 1.1fr .9fr;
-    gap: .7rem;
-}
-
-.welcome-grid h2 {
-    margin: 0 0 0.2rem;
-}
-
-.welcome-grid ul {
-    margin: .5rem 0;
-    padding-left: 1rem;
-}
-
-.feature-box {
-    background: rgba(255, 255, 255, .2);
-    border: 1px dashed rgba(255, 255, 255, .5);
-    border-radius: 8px;
-    padding: .7rem;
+    max-width: 960px;
+    margin: 0 auto
 }
 
 .card {
     background: #fff;
-    border: 1px solid #e8e8e8;
+    border: 1px solid #e5e7eb;
     border-radius: 10px;
-    box-shadow: 0 3px 14px rgba(0, 0, 0, .06);
-    padding: 14px;
-    margin-bottom: 12px;
+    padding: 16px;
+    margin-top: 12px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, .05)
+}
+
+.hidden {
+    display: none !important
 }
 
 input,
 select,
 button {
     width: 100%;
-    margin: .35rem 0;
-    padding: .65rem .5rem;
-    border: 1px solid #bed1ee;
-    border-radius: 7px;
-    font-size: .95rem;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #d1d5db;
+    border-radius: 6px
 }
 
 button {
     cursor: pointer;
-    background: #2f6df1;
+    background: #1f2937;
     color: #fff;
-    border: 0;
-    font-weight: 700;
+    border: none
 }
 
-.danger {
-    background: #e53e3e;
-}
-
-.hidden {
-    display: none !important;
-}
-
-.message {
-    padding: .5rem .8rem;
-    border-radius: 8px;
-    display: none;
-    margin-bottom: 10px;
-}
-
-.message.show {
-    display: block;
-}
-
-.message.success {
-    background: #e6ffed;
-    color: #064b2f;
-    border: 1px solid #95d5a1;
-}
-
-.message.error {
-    background: #ffe9e9;
-    color: #8b1a1a;
-    border: 1px solid #f3b4b4;
+button:hover {
+    background: #111827
 }
 
 .tabs {
     display: flex;
-    gap: .25rem;
-    margin-bottom: .5rem;
+    gap: 8px;
+    margin-bottom: 8px
 }
 
 .tabs button {
     flex: 1;
-    border: 1px solid #ccd3e9;
-    background: #f9fbff;
-    color: #111;
-    padding: .35rem;
-    border-radius: 5px;
-    font-weight: 600;
+    background: #e2e8f0;
+    color: #111827;
+    border: 1px solid #cbd5e1
 }
 
 .tabs button.active {
-    background: #2f6df1;
-    color: #fff;
+    background: #1f2937;
+    color: #fff
 }
 
-.dash-head {
+.message {
+    margin-top: 12px;
+    padding: 10px;
+    border-radius: 6px;
+    display: none
+}
+
+.message.show {
+    display: block
+}
+
+.subrow {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px
+}
+
+.top-row {
     display: flex;
-    gap: .5rem;
-    align-items: center;
     justify-content: space-between;
+    align-items: center
 }
 
-.service-card {
-    border: 1px solid #dce4f5;
-    border-radius: 8px;
-    padding: .5rem;
-    margin-bottom: .4rem;
-    background: #fff;
+#service-row .card,
+#provider-row .card,
+#booking-row .card,
+#coins-row .card {
+    margin-top: 8px;
 }
 
-.service-card small {
-    color: #555;
+.link {
+    color: #2563eb;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: .92rem;
+    margin-top: 8px
 }
 
-.table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: .5rem;
-}
-
-.table th,
-.table td {
-    border: 1px solid #ddd;
-    padding: .4rem;
-    text-align: left;
-}
-
-.table th {
-    background: #f9faff;
+.status-label {
+    display: inline-block;
+    background: #e0f2fe;
+    color: #0369a1;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: .75rem;
+    margin-left: 6px
 }

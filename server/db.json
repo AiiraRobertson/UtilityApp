@@ -1,114 +1,118 @@
 {
   "users": [
     {
-      "id": "3eC8JqBUXln36WvYgB7qa",
+      "id": "5ii7UXNQHxAQgyrF79DY8",
       "name": "Test User",
       "email": "user@test.com",
-      "password": "$2b$10$tfxMxALVKhjXAMvGiTU7nOhrf36.2fbJp4MRFnDosnCVjqLWjosQe",
+      "password": "$2b$10$fqYf8XP5wO4OlD13nprQW.XtS2w1PUdYHT88G7jnICBidPlhyuOJe",
       "phone": "1234567890",
       "role": "user",
-      "verified": false,
-      "otp": "700692",
-      "otpExpires": 1774014165802,
-      "resetToken": null,
-      "resetTokenExpires": null,
-      "coins": 0,
-      "bankBalance": 1000,
-      "linkedBankAccount": "1111222233334444"
-    },
-    {
-      "id": "3f1bUyd-8t4LY279pQt9z",
-      "name": "NoOtp",
-      "email": "nootp@test.com",
-      "password": "$2b$10$dWZDvuEZx91LqUOQlrs8Nu5fkabBHJg94wpucBjDC9Rlfm5JtOWqa",
-      "phone": "1112223333",
-      "role": "user",
       "verified": true,
-      "resetToken": null,
-      "resetTokenExpires": null,
+      "otp": null,
+      "otpExpires": null,
       "coins": 0,
-      "bankBalance": 1000,
-      "linkedBankAccount": "1111222233334444"
+      "bankAccount": "1234",
+      "resetToken": null,
+      "favorites": [],
+      "createdAt": "2026-03-20T15:33:04.967Z"
     }
   ],
   "services": [
     {
-      "id": "s1",
-      "category": "Barber",
-      "provider": "Clipper King",
-      "price": 30
+      "id": "svc-1",
+      "name": "Barber"
     },
     {
-      "id": "s2",
-      "category": "Massage",
-      "provider": "Relax Therapies",
-      "price": 45
+      "id": "svc-2",
+      "name": "Massage"
     },
     {
-      "id": "s3",
-      "category": "Pedicure",
-      "provider": "Nail Studio",
-      "price": 25
+      "id": "svc-3",
+      "name": "Pedicure"
     },
     {
-      "id": "s4",
-      "category": "Manicure",
-      "provider": "Nail Studio",
-      "price": 28
+      "id": "svc-4",
+      "name": "Manicure"
     },
     {
-      "id": "s5",
-      "category": "Stylist",
-      "provider": "Fashion Pro",
-      "price": 50
+      "id": "svc-5",
+      "name": "Stylist"
     },
     {
-      "id": "s6",
-      "category": "Makeup",
-      "provider": "Glow Art",
-      "price": 60
+      "id": "svc-6",
+      "name": "Makeup Artist"
     },
     {
-      "id": "s7",
-      "category": "Cook",
-      "provider": "Home Chef",
-      "price": 80
+      "id": "svc-7",
+      "name": "Cook"
     },
     {
-      "id": "s8",
-      "category": "Plumber",
-      "provider": "FixIt Plumbers",
-      "price": 70
+      "id": "svc-8",
+      "name": "Plumber"
     },
     {
-      "id": "s9",
-      "category": "Electrician",
-      "provider": "Power Solutions",
-      "price": 65
+      "id": "svc-9",
+      "name": "Electrician"
     },
     {
-      "id": "s10",
-      "category": "Laundry",
-      "provider": "CleanWave",
-      "price": 35
+      "id": "svc-10",
+      "name": "Laundry"
     },
     {
-      "id": "s11",
-      "category": "Carpenter",
-      "provider": "WoodWorks",
-      "price": 90
+      "id": "svc-11",
+      "name": "Furniture/Carpenter"
     },
     {
-      "id": "s12",
-      "category": "Airport Pickup",
-      "provider": "Air Shuttle",
-      "price": 120
+      "id": "svc-12",
+      "name": "Airport Pickup"
     },
     {
-      "id": "s13",
-      "category": "CCTV",
-      "provider": "Secure Vision",
-      "price": 90
+      "id": "svc-13",
+      "name": "CCTV Engineer"
+    }
+  ],
+  "providers": [
+    {
+      "id": "prov-1",
+      "name": "Daniel Barber",
+      "service": "Barber",
+      "phone": "0700000001",
+      "price": 2500
+    },
+    {
+      "id": "prov-2",
+      "name": "Olivia Massage",
+      "service": "Massage",
+      "phone": "0700000002",
+      "price": 4000
+    },
+    {
+      "id": "prov-3",
+      "name": "Joy Stylist",
+      "service": "Stylist",
+      "phone": "0700000003",
+      "price": 3000
+    },
+    {
+      "id": "prov-4",
+      "name": "Henry Electric",
+      "service": "Electrician",
+      "phone": "0700000004",
+      "price": 6000
+    },
+    {
+      "id": "prov-5",
+      "name": "Grace Cleaner",
+      "service": "Laundry",
+      "phone": "0700000005",
+      "price": 2000
+    },
+    {
+      "id": "prov-6",
+      "name": "CCTV Pro",
+      "service": "CCTV Engineer",
+      "phone": "0700000006",
+      "price": 7000
     }
   ],
   "bookings": []

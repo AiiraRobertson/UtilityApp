@@ -1,166 +1,186 @@
-const state = { token: null, user: null, services: [] };
-const show = (id, yes = true) => document.getElementById(id).classList.toggle('hidden', !yes);
-const setMessage = (text, type = 'success') => { const el = document.getElementById('message'); el.textContent = text; el.className = `message show ${type}`; setTimeout(() => el.className = 'message', 4000); };
-const fetchJson = async (url, opts = {}) => {
-    const base = '/api';
-    const headers = { 'Content-Type': 'application/json', ...opts.headers };
-    const res = await fetch(base + url, { ...opts, headers });
-    let data = null;
-    const text = await res.text();
-    if (text) {
-        try { data = JSON.parse(text); } catch (e) { data = null; }
-    }
-    if (!res.ok) {
-        const errMsg = data?.error || data?.message || `Request failed: ${res.status}`;
-        throw new Error(errMsg || 'Network error');
-    }
-    return data;
+const messageEl = document.getElementById("message");
+const authSection = document.getElementById("auth-section");
+const dashboard = document.getElementById("dashboard");
+
+const tabs = {
+    register: document.getElementById("show-register"),
+    login: document.getElementById("show-login"),
 };
+const registerForm = document.getElementById("register");
+const loginForm = document.getElementById("login");
+const forgotForm = document.getElementById("forgot");
 
-const setAuthToken = (token) => {
-    state.token = token;
-    if (token) localStorage.setItem('utilToken', token);
-    else localStorage.removeItem('utilToken');
-};
+tabs.register.addEventListener("click", () => showTab("register"));
+tabs.login.addEventListener("click", () => showTab("login"));
 
-const showPanel = (panel) => {
-    ['register', 'login', 'forgot'].forEach(p => show(`${p}-panel`, p === panel));
-    document.querySelectorAll('#auth-tabs button').forEach(b => b.classList.toggle('active', b.id === `tab-${panel}`));
-};
+document.getElementById("show-forgot").addEventListener("click", () => {
+    loginForm.classList.add("hidden");
+    forgotForm.classList.remove("hidden");
+});
 
-const loadProfile = async () => {
-    const data = await fetchJson('/profile', {
-        headers: { Authorization: `Bearer ${state.token}` }
-    });
-    state.user = data.user;
-    return data.user;
-};
-
-const renderDashboard = async () => {
-    const dashBody = document.getElementById('dash-body');
-    dashBody.innerHTML = '';
-    const user = await loadProfile();
-    document.getElementById('dash-title').textContent = user.role === 'provider' ? 'Service Provider Dashboard' : 'User Dashboard';
-    const info = document.createElement('div');
-    info.innerHTML = `<p><strong>${user.name}</strong> (${user.email}) - Role: ${user.role}</p><p>Bank: $${user.bankBalance} | Util Coins: ${user.coins}</p>`;
-    dashBody.appendChild(info);
-
-    if (user.role === 'user') {
-        const buyDiv = document.createElement('div');
-        buyDiv.innerHTML = `<h3>Buy Util Coins</h3><input id="buy-coins-amt" placeholder="Amount to buy from bank" type="number"/><button id="buy-coins">Buy Coins</button>`;
-        dashBody.appendChild(buyDiv);
-        buyDiv.querySelector('#buy-coins').onclick = async () => {
-            try {
-                const amt = Number(document.getElementById('buy-coins-amt').value);
-                const r = await fetchJson('/wallet/buy-coins', { method: 'POST', body: JSON.stringify({ amount: amt }), headers: { Authorization: `Bearer ${state.token}` } });
-                setMessage(r.message, 'success');
-                renderDashboard();
-            } catch (e) { setMessage(e.message, 'error'); }
-        };
-
-        const list = document.createElement('div');
-        list.innerHTML = '<h3>Book a Service</h3><div id="service-list"></div>';
-        dashBody.appendChild(list);
-        const services = await fetchJson('/services');
-        state.services = services;
-        const container = document.getElementById('service-list');
-        container.innerHTML = '';
-        services.forEach(s => {
-            const card = document.createElement('div'); card.className = 'service-card';
-            card.innerHTML = `<strong>${s.category}</strong> by ${s.provider}<br/><small>Price: $${s.price}</small><br/><select id="pay-${s.id}"><option value="coins">Util Coins</option><option value="card">Bank Card</option></select><button id="book-${s.id}">Book</button>`;
-            container.appendChild(card);
-            card.querySelector(`#book-${s.id}`).onclick = async () => {
-                const method = card.querySelector(`#pay-${s.id}`).value;
-                try {
-                    const result = await fetchJson('/book', { method: 'POST', headers: { Authorization: `Bearer ${state.token}` }, body: JSON.stringify({ serviceId: s.id, paymentMethod: method, date: new Date().toISOString() }) });
-                    setMessage(`Booked ${s.category} with ${method}.`, 'success');
-                    renderDashboard();
-                } catch (e) { setMessage(e.message, 'error'); }
-            };
-        });
-
-        const bookData = await fetchJson('/bookings', { headers: { Authorization: `Bearer ${state.token}` } });
-        const bTable = document.createElement('div');
-        bTable.innerHTML = `<h3>Your Bookings</h3><table class="table"><thead><tr><th>Service</th><th>Provider</th><th>Amount</th><th>Method</th><th>Status</th></tr></thead><tbody>${bookData.map(b => `<tr><td>${b.service.category}</td><td>${b.service.provider}</td><td>$${b.amount}</td><td>${b.paymentMethod}</td><td>${b.status}</td></tr>`).join('')}</tbody></table>`;
-        dashBody.appendChild(bTable);
-    } else {
-        const allBookings = await fetchJson('/bookings', { headers: { Authorization: `Bearer ${state.token}` } });
-        const list = document.createElement('div');
-        list.innerHTML = `<h3>All Bookings</h3><table class="table"><thead><tr><th>User</th><th>Service</th><th>Provider</th><th>Amount</th><th>Status</th></tr></thead><tbody>${allBookings.map(b => `<tr><td>${(b.userId)}</td><td>${b.service.category}</td><td>${b.service.provider}</td><td>$${b.amount}</td><td>${b.status}</td></tr>`).join('')}</tbody></table>`;
-        dashBody.appendChild(list);
-    }
-};
-
-const init = () => {
-    showPanel('register');
-    document.getElementById('tab-register').onclick = () => showPanel('register');
-    document.getElementById('tab-login').onclick = () => showPanel('login');
-    document.getElementById('tab-forgot').onclick = () => showPanel('forgot');
-
-    document.getElementById('btn-register').onclick = async () => {
-        try {
-            const payload = {
-                name: document.getElementById('reg-name').value,
-                email: document.getElementById('reg-email').value,
-                phone: document.getElementById('reg-phone').value,
-                password: document.getElementById('reg-password').value,
-                role: document.getElementById('reg-role').value
-            };
-            const r = await fetchJson('/register', { method: 'POST', body: JSON.stringify(payload) });
-            setMessage(r.message, 'success');
-            show('otp-panel', false);
-            showPanel('login');
-        } catch (e) { setMessage(e.message, 'error'); }
-    };
-
-    document.getElementById('btn-verify-otp').onclick = async () => {
-        setMessage('OTP verification is disabled. Just login.', 'success');
-    };
-};
-
-document.getElementById('btn-login').onclick = async () => {
-    try {
-        const r = await fetchJson('/login', { method: 'POST', body: JSON.stringify({ email: document.getElementById('login-email').value, password: document.getElementById('login-password').value }) });
-        setAuthToken(r.token);
-        state.user = r.user;
-        setMessage('Login successful', 'success');
-        show('auth', false);
-        show('dashboard', true);
-        await renderDashboard();
-    } catch (e) { setMessage(e.message, 'error'); }
-};
-
-document.getElementById('btn-forgot').onclick = async () => {
-    try {
-        const r = await fetchJson('/forgot-password', { method: 'POST', body: JSON.stringify({ email: document.getElementById('forgot-email').value }) });
-        setMessage(`${r.message} token:${r.resetToken}`, 'success');
-        show('reset-panel', true);
-    } catch (e) { setMessage(e.message, 'error'); }
-};
-
-document.getElementById('btn-reset-password').onclick = async () => {
-    try {
-        await fetchJson('/reset-password', { method: 'POST', body: JSON.stringify({ email: document.getElementById('reset-email').value, token: document.getElementById('reset-token').value, newPassword: document.getElementById('reset-password').value }) });
-        setMessage('Password reset done. Login with new password.', 'success');
-        show('reset-panel', false);
-    } catch (e) { setMessage(e.message, 'error'); }
-};
-
-document.getElementById('btn-logout').onclick = () => {
-    setAuthToken(null);
-    state.user = null;
-    show('dashboard', false);
-    show('auth', true);
-    showPanel('login');
-};
-
-const stored = localStorage.getItem('utilToken');
-if (stored) {
-    state.token = stored;
-    show('auth', false);
-    show('dashboard', true);
-    renderDashboard().catch(() => { show('auth', true); show('dashboard', false); setAuthToken(null); });
+function showTab(name) {
+    registerForm.classList.toggle("hidden", name !== "register");
+    loginForm.classList.toggle("hidden", name !== "login");
+    forgotForm.classList.add("hidden");
+    tabs.register.classList.toggle("active", name === "register");
+    tabs.login.classList.toggle("active", name === "login");
 }
+
+function showMessage(text, type = "info") {
+    messageEl.textContent = text;
+    messageEl.className = "message show";
+    messageEl.style.background = type === "error" ? "#fee2e2" : "#d1fae5";
+    messageEl.style.color = type === "error" ? "#991b1b" : "#065f46";
+    setTimeout(() => messageEl.classList.remove("show"), 7000);
+}
+
+const api = {
+    post: async (url, body, token) => {
+        const res = await fetch(url, {
+            method: "POST",
+            headers: { "Content-Type": "application/json", ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+            body: JSON.stringify(body),
+        });
+        return { ok: res.ok, status: res.status, body: await res.json() };
+    },
+    get: async (url, token) => {
+        const res = await fetch(url, { headers: token ? { Authorization: `Bearer ${token}` } : {} });
+        return { ok: res.ok, status: res.status, body: await res.json() };
+    },
 };
+
+async function register() {
+    const name = document.getElementById("reg-name").value.trim();
+    const email = document.getElementById("reg-email").value.trim();
+    const phone = document.getElementById("reg-phone").value.trim();
+    const password = document.getElementById("reg-password").value;
+    const role = document.getElementById("reg-role").value;
+    const bankAccount = document.getElementById("reg-bank").value.trim();
+    const { ok, body } = await api.post("/api/register", { name, email, phone, password, role, bankAccount });
+    if (!ok) return showMessage(body.error || "Register failed", "error");
+    showMessage(`Registered. OTP: ${body.otp}. Verify OTP below`);
+}
+
+async function verifyOtp() {
+    const email = document.getElementById("otp-email").value.trim();
+    const otp = document.getElementById("otp-code").value.trim();
+    const { ok, body } = await api.post("/api/verify-otp", { email, otp });
+    if (!ok) return showMessage(body.error || "OTP verify failed", "error");
+    showMessage(body.message);
+}
+
+async function login() {
+    const email = document.getElementById("login-email").value.trim();
+    const password = document.getElementById("login-password").value;
+    const { ok, body } = await api.post("/api/login", { email, password });
+    if (!ok) return showMessage(body.error || "Login failed", "error");
+    localStorage.setItem("token", body.token);
+    localStorage.setItem("role", body.user.role);
+    showMessage("Logged in successfully");
+    showDashboard();
+}
+
+async function sendForgot() {
+    const email = document.getElementById("forgot-email").value.trim();
+    const { ok, body } = await api.post("/api/forgot-password", { email });
+    if (!ok) return showMessage(body.error || "Request failed", "error");
+    showMessage(`Reset token: ${body.resetToken}`);
+}
+
+async function resetPassword() {
+    const email = document.getElementById("forgot-email").value.trim();
+    const token = document.getElementById("reset-token").value.trim();
+    const password = document.getElementById("reset-password").value;
+    const { ok, body } = await api.post("/api/reset-password", { email, token, newPassword: password });
+    if (!ok) return showMessage(body.error || "Reset failed", "error");
+    showMessage(body.message);
+}
+
+async function fetchDashboard() {
+    const token = localStorage.getItem("token");
+    if (!token) return null;
+    const role = localStorage.getItem("role") || "user";
+    const endpoint = role === "provider" ? "/api/provider-dashboard" : "/api/dashboard";
+    const { ok, body } = await api.get(endpoint, token);
+    if (!ok) {
+        localStorage.removeItem("token");
+        return null;
+    }
+    return { role, body };
+}
+
+async function showDashboard() {
+    const result = await fetchDashboard();
+    if (!result) { authSection.classList.remove("hidden"); dashboard.classList.add("hidden"); return; }
+    authSection.classList.add("hidden"); dashboard.classList.remove("hidden");
+
+    const display = document.getElementById("user-info");
+    display.innerHTML = `<p><strong>${result.role === "provider" ? "Provider" : "User"}:</strong> ${result.body.provider?.name || result.body.user?.name} | Coins: ${result.body.user?.coins ?? result.body.provider?.coins ?? 0}</p>`;
+
+    const serviceRow = document.getElementById("service-row");
+    const providerRow = document.getElementById("provider-row");
+    const bookingRow = document.getElementById("booking-row");
+    const coinsRow = document.getElementById("coins-row");
+
+    serviceRow.innerHTML = "";
+    providerRow.innerHTML = "";
+    bookingRow.innerHTML = "";
+    coinsRow.innerHTML = "";
+
+    if (result.role === "provider") {
+        providerRow.innerHTML = `<div class="card"><h3>Provider Bookings</h3>${result.body.bookings.map((b) => `<p>${b.service} for ${b.user} on ${b.date} ${b.time} (${b.amount} via ${b.paymentMethod})</p>`).join("")}</div>`;
+        return;
+    }
+
+    const services = await api.get("/api/services");
+    const providers = await api.get("/api/providers");
+    const serviceCards = services.body.services.map((s) => `<span class="status-label">${s.name}</span>`).join(" ");
+    serviceRow.innerHTML = `<div class="card"><h3>Available Services</h3>${serviceCards}</div>`;
+    providerRow.innerHTML = `<div class="card"><h3>Service Providers</h3>${providers.body.providers.map((p) => `<p>${p.name} (${p.service}) - ${p.price} NGN <button data-provider='${p.id}' data-service='${p.service}' data-price='${p.price}'>Book</button></p>`).join("")}</div>`;
+
+    providerRow.querySelectorAll("button").forEach((btn) => {
+        btn.addEventListener("click", async () => {
+            const providerId = btn.dataset.provider;
+            const serviceName = btn.dataset.service;
+            const amount = Number(btn.dataset.price);
+            const service = services.body.services.find((s) => s.name === serviceName);
+            if (!service) return showMessage("Service not available", "error");
+            const date = prompt("Booking date (e.g. 2026-04-20)");
+            const time = prompt("Booking time (e.g. 15:00)");
+            const method = prompt("Payment method: card or coins", "card");
+            const { ok, body } = await api.post("/api/book", { providerId, serviceId: service.id, date, time, paymentMethod: method === "coins" ? "coins" : "card", amount });
+            if (!ok) return showMessage(body.error || "Booking failed", "error");
+            showMessage("Booking confirmed");
+            showDashboard();
+        });
+    });
+
+    bookingRow.innerHTML = `<div class="card"><h3>Your Bookings</h3>${result.body.bookings.length ? result.body.bookings.map((b) => `<p>${b.service} with ${b.provider} on ${b.date} ${b.time} amount ${b.amount} (${b.paymentMethod})</p>`).join("") : "No bookings yet"}</div>`;
+
+    coinsRow.innerHTML = `<div class="card"><h3>Util Coins</h3><p>Current coins: ${result.body.user.coins}</p><input id="buy-coins" placeholder="Buy coins amount" type="number" min="100" /><button id="btn-buy">Buy Coins</button></div>`;
+    document.getElementById("btn-buy").addEventListener("click", async () => {
+        const amount = Number(document.getElementById("buy-coins").value);
+        const { ok, body } = await api.post("/api/buy-coins", { amount }, localStorage.getItem("token"));
+        if (!ok) return showMessage(body.error || "Buy failed", "error");
+        showMessage(body.message);
+        showDashboard();
+    });
+}
+
+async function init() {
+    document.getElementById("btn-register").addEventListener("click", register);
+    document.getElementById("btn-verify-otp").addEventListener("click", verifyOtp);
+    document.getElementById("btn-login").addEventListener("click", login);
+    document.getElementById("btn-forgot").addEventListener("click", sendForgot);
+    document.getElementById("btn-reset").addEventListener("click", resetPassword);
+    document.getElementById("btn-logout").addEventListener("click", () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("role");
+        dashboard.classList.add("hidden");
+        authSection.classList.remove("hidden");
+    });
+    showTab("register");
+    await showDashboard();
+}
 
 init();

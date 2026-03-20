@@ -1,88 +1,69 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="utf-8" />
-    <title>Utility Home Services</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UtilHome Services</title>
     <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
     <div class="app">
         <header>
-            <h1>Utility Home Services</h1>
-            <p class="subtitle">Book home services from barbers to plumbers, cooks, and airport pickups in one app.</p>
+            <h1>UtilHome Services</h1>
+            <p>Book home services, manage account, pay with bank card or util coins.</p>
         </header>
-        <div class="welcome-card card">
-            <div class="welcome-grid">
-                <div>
-                    <h2>Welcome to UtilHome</h2>
-                    <p>Fast and secure booking with OTP, separate dashboards for users and service providers, and easy
-                        wallet payments.</p>
-                    <ul>
-                        <li>Register as User or Service Provider</li>
-                        <li>Verify OTP, login, and access dashboards</li>
-                        <li>Book services using bank card or Util Coins</li>
-                    </ul>
-                </div>
-                <div class="feature-box">
-                    <h3>Quick Start</h3>
-                    <p>1) Register (User/Provider)</p>
-                    <p>2) Verify OTP</p>
-                    <p>3) Login and start booking</p>
-                </div>
-            </div>
-        </div>
+
         <div id="message" class="message"></div>
-        <div id="auth" class="card">
-            <div id="auth-tabs" class="tabs">
-                <button id="tab-register" class="active">Register</button>
-                <button id="tab-login">Login</button>
-                <button id="tab-forgot">Forgot</button>
+
+        <div id="auth-section" class="card">
+            <div class="tabs">
+                <button id="show-register">Register</button>
+                <button id="show-login">Login</button>
             </div>
-            <div id="register-panel" class="panel">
+            <div id="register" class="form">
                 <h2>Register</h2>
-                <input placeholder="Full name" id="reg-name" />
-                <input placeholder="Email" id="reg-email" type="email" />
-                <input placeholder="Phone" id="reg-phone" />
-                <input placeholder="Password" id="reg-password" type="password" />
+                <input id="reg-name" placeholder="Full name" />
+                <input id="reg-email" placeholder="Email" type="email" />
+                <input id="reg-phone" placeholder="Phone" />
+                <input id="reg-password" placeholder="Password" type="password" />
                 <select id="reg-role">
                     <option value="user">User</option>
                     <option value="provider">Service Provider</option>
                 </select>
-                <button id="btn-register">Register & Send OTP</button>
+                <input id="reg-bank" placeholder="Bank account (optional)" />
+                <button id="btn-register">Register & Generate OTP</button>
+                <div class="subrow"><input id="otp-email" placeholder="Email for OTP" type="email" /><input
+                        id="otp-code" placeholder="Enter OTP" /><button id="btn-verify-otp">Verify OTP</button></div>
             </div>
-            <div id="login-panel" class="panel hidden">
+            <div id="login" class="form hidden">
                 <h2>Login</h2>
-                <input placeholder="Email" id="login-email" type="email" />
-                <input placeholder="Password" id="login-password" type="password" />
+                <input id="login-email" placeholder="Email" type="email" />
+                <input id="login-password" placeholder="Password" type="password" />
                 <button id="btn-login">Login</button>
+                <div class="link" id="show-forgot">Forgot password?</div>
             </div>
-            <div id="forgot-panel" class="panel hidden">
-                <h2>Forgot Password</h2>
-                <input placeholder="Email" id="forgot-email" type="email" />
-                <button id="btn-forgot">Request Reset Token</button>
+            <div id="forgot" class="form hidden">
+                <h2>Forgot password</h2>
+                <input id="forgot-email" placeholder="Email" type="email" />
+                <button id="btn-forgot">Send reset token</button>
+                <input id="reset-token" placeholder="Reset token" />
+                <input id="reset-password" placeholder="New password" type="password" />
+                <button id="btn-reset">Reset password</button>
             </div>
         </div>
-        <div id="otp-panel" class="card hidden">
-            <h2>Verify OTP</h2>
-            <input placeholder="Email" id="otp-email" type="email" /><br />
-            <input placeholder="OTP" id="otp-code" /><br />
-            <button id="btn-verify-otp">Verify OTP</button>
-        </div>
-        <div id="reset-panel" class="card hidden">
-            <h2>Reset Password</h2>
-            <input placeholder="Email" id="reset-email" type="email" /><br />
-            <input placeholder="Reset Token" id="reset-token" /><br />
-            <input placeholder="New password" id="reset-password" type="password" /><br />
-            <button id="btn-reset-password">Reset Password</button>
-        </div>
+
         <div id="dashboard" class="card hidden">
-            <div class="dash-head">
-                <h2 id="dash-title">Dashboard</h2><button id="btn-logout" class="danger">Logout</button>
+            <div class="top-row">
+                <h2>Dashboard</h2><button id="btn-logout">Logout</button>
             </div>
-            <div id="dash-body"></div>
+            <div id="user-info"></div>
+            <div id="service-row"></div>
+            <div id="provider-row"></div>
+            <div id="booking-row"></div>
+            <div id="coins-row"></div>
+            <div id="book-flight"></div>
         </div>
     </div>
     <script src="app.js"></script>
